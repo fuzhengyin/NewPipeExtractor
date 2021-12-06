@@ -67,14 +67,14 @@ public class YoutubeParsingHelper {
     public static final String YOUTUBEI_V1_URL = "https://www.youtube.com/youtubei/v1/";
 
     private static final String HARDCODED_CLIENT_VERSION = "2.20210728.00.00";
-    private static final String HARDCODED_KEY = "hello";
-    private static final String MOBILE_YOUTUBE_KEY = "hello-df2KTyQ_vz_yYM39w";
+    private static final String HARDCODED_KEY = "";
+    private static final String MOBILE_YOUTUBE_KEY = "";
     private static final String MOBILE_YOUTUBE_CLIENT_VERSION = "16.29.38";
     private static String clientVersion;
     private static String key;
 
     private static final String[] HARDCODED_YOUTUBE_MUSIC_KEY =
-            {"hello-WEYFDNX30", "67", "1.20210726.00.01"};
+            {"", "67", "1.20210726.00.01"};
     private static String[] youtubeMusicKey;
 
     private static boolean keyAndVersionExtracted = false;
@@ -316,7 +316,8 @@ public class YoutubeParsingHelper {
 
     public static boolean areHardcodedClientVersionAndKeyValid()
             throws IOException, ExtractionException {
-        if (hardcodedClientVersionAndKeyValid.isPresent()) {
+        return false;
+        /*if (hardcodedClientVersionAndKeyValid.isPresent()) {
             return hardcodedClientVersionAndKeyValid.get();
         }
         // @formatter:off
@@ -351,7 +352,7 @@ public class YoutubeParsingHelper {
 
         hardcodedClientVersionAndKeyValid = Optional.of(responseBody.length() > 5000
                 && responseCode == 200); // Ensure to have a valid response
-        return hardcodedClientVersionAndKeyValid.get();
+        return hardcodedClientVersionAndKeyValid.get();*/
     }
 
     private static void extractClientVersionAndKey() throws IOException, ExtractionException {
