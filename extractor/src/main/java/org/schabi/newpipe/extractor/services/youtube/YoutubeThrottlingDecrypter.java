@@ -36,7 +36,8 @@ public class YoutubeThrottlingDecrypter {
 
     private static final Pattern N_PARAM_PATTERN = Pattern.compile("[&?]n=([^&]+)");
     private static final Pattern FUNCTION_NAME_PATTERN = Pattern.compile(
-            "b=a\\.get\\(\"n\"\\)\\)&&\\(b=(.+?)\\(b\\),a\\.set\\(\"n\",b\\)");
+            "b=a\\.get\\(\"n\"\\)\\)&&\\(b=(\\w+)\\(b\\),a\\.set\\(\"n\",b\\)");
+
     private static final Map<String, String> nParams = new HashMap<>();
 
     private final String functionName;
@@ -65,18 +66,7 @@ public class YoutubeThrottlingDecrypter {
 
     private String parseDecodeFunctionName(final String playerJsCode)
             throws Parser.RegexException {
-        String functionName = Parser.matchGroup1(FUNCTION_NAME_PATTERN, playerJsCode);
-        if (functionName.contains("[")) {
-            int arrayStartBrace = functionName.indexOf("[");
-            String arrayVarName = functionName.substring(0, arrayStartBrace);
-            String order = functionName.substring(arrayStartBrace+1, functionName.indexOf("]"));
-            int arrayNum = Integer.parseInt(order);
-            Pattern ARRAY_PATTERN = Pattern.compile(String.format("var %s=\\[(.+?)\\];", arrayVarName));
-            String arrayString = Parser.matchGroup1(ARRAY_PATTERN, playerJsCode);
-            String names[] = arrayString.split(",");
-            functionName = names[arrayNum];
-        }
-        return functionName;
+        return Parser.matchGroup1(FUNCTION_NAME_PATTERN, playerJsCode);
     }
 
     @Nonnull
